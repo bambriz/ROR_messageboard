@@ -8,7 +8,35 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body stylesheet="app/assets/stylesheets/application.css.scss">
+
+    <div class="navbar navbar-inverse" >
+      <div class="container">
+        <div class="navbar-header">
+          <%= link_to "Message Board", root_path, class: "navbar-brand btn btn-basic navbar-btn"  %>
+        </div>
+        <ul class="nav navbar-nav">
+          
+          <% if user_signed_in? %>
+            <li class="navbar-left navbar-text btn btn-basic navbar-btn disabled">Hello, <%= current_user.email %> </li>
+            <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-warning navbar-btn" %> </li>
+          <% else %>
+            <li><%= link_to "Sign Up", new_user_registration_path, class: "btn btn-default navbar-btn btn-sm" %></li>
+              <li><%= link_to "Log In",new_user_session_path, class: "btn btn-default navbar-btn btn-sm" %></li>
+            <% end %>
+        </ul>
+        <% if user_signed_in? %>
+          
+          <p><%= link_to "New Message", new_message_path, class: "navbar-right   btn btn-success navbar-btn  " %></p>
+        <% end %>
+      </div>
+    </div>
+ 
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
